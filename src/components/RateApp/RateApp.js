@@ -1,5 +1,6 @@
 import React from "react";
 import RateButton from "../../components/RateButton/RateButton";
+import "./RateApp.less";
 
 class RateApp extends React.Component {
   constructor(props) {
@@ -81,7 +82,9 @@ class RateApp extends React.Component {
         <RateButton clickAction={this.increment} type="like" />
         <RateButton clickAction={this.decrement} type="dislike" />
         <div>{this.state.message}</div>
-        <button onClick={this.reset}>Tilbakestill</button>
+        <button className="tjafs" onClick={this.reset}>
+          Tilbakestill
+        </button>
       </div>
     );
   }
