@@ -14,7 +14,8 @@ class RateApp extends React.Component {
     this.reset = this.reset.bind(this);
     this.state = {
       count: 0,
-      message: "Brukerne er nøytrale til appen"
+      message: "Brukerne er nøytrale til appen",
+      animateButton: "no-animation"
     };
   }
 
@@ -31,34 +32,45 @@ class RateApp extends React.Component {
     }
   } */
 
-  increment() {
+  increment(e) {
+    const buttonPressed = e.target;
+    buttonPressed.classList.add("animate");
     this.setState(
       prevState => ({
         count: prevState.count + 1
       }),
       this.updateMessage
     );
+    setTimeout(() => buttonPressed.classList.remove("animate"), 200);
   }
 
-  decrement() {
+  decrement(e) {
+    const buttonPressed = e.target;
+    buttonPressed.classList.add("animate");
     this.setState(
       prevState => ({
         count: prevState.count - 1
       }),
       this.updateMessage
     );
+    setTimeout(() => buttonPressed.classList.remove("animate"), 200);
   }
 
   reset() {
+    const app = this.app;
+    this.app.classList.toggle("flash");
     this.setState(
       () => ({
         count: 0
       }),
       this.updateMessage
     );
+
+    setTimeout(() => app.classList.toggle("flash"), 2000);
   }
 
   updateMessage() {
+    console.log(this.state.count);
     const count = this.state.count;
     let adjective;
     if (count < -10) {
@@ -85,7 +97,12 @@ class RateApp extends React.Component {
 
   render() {
     return (
-      <div className="rate-app">
+      <div
+        className="rate-app"
+        ref={app => {
+          this.app = app;
+        }}
+      >
         <Heading1>{this.props.title}</Heading1>
         <RateButton clickAction={this.increment} type="like" />
         <RateButton clickAction={this.decrement} type="dislike" />

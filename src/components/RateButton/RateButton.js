@@ -4,7 +4,7 @@ import "./RateButton.less";
 
 const RateButton = props => {
   return (
-    <button onClick={props.clickAction} className="rate-button">
+    <button onClick={props.clickAction} className={`rate-button`}>
       <TommelOppIkon
         className={props.type === "like" ? "thumbsup" : "thumbsdown"}
       />
