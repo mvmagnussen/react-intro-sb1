@@ -1,6 +1,10 @@
 import React from "react";
 import RateButton from "../../components/RateButton/RateButton";
 import "./RateApp.less";
+import { ButtonGroup, SecondaryButton } from "@sb1/ffe-buttons-react";
+import { Heading1 } from "@sb1/ffe-core-react";
+import { ContextInfoMessage } from "@sb1/ffe-context-message-react";
+import { InfoIkon } from "@sb1/ffe-icons-react";
 
 class RateApp extends React.Component {
   constructor(props) {
@@ -10,7 +14,7 @@ class RateApp extends React.Component {
     this.reset = this.reset.bind(this);
     this.state = {
       count: 0,
-      message: "Du er nøytral til appen"
+      message: "Brukerne er nøytrale til appen"
     };
   }
 
@@ -57,18 +61,22 @@ class RateApp extends React.Component {
   updateMessage() {
     const count = this.state.count;
     let adjective;
-    if (count < -5) {
+    if (count < -10) {
+      adjective = "får depresjon av";
+    } else if (count < -5) {
       adjective = "virkelig hater";
     } else if (count < 0) {
       adjective = "misliker";
     } else if (count === 0) {
-      adjective = "er nøytral til";
+      adjective = "er nøytrale til";
+    } else if (count > 10) {
+      adjective = "er i ekstase over";
     } else if (count > 5) {
       adjective = "virkelig digger";
     } else if (count > 0) {
       adjective = "liker";
     }
-    const newMessage = `Du ${adjective} appen`;
+    const newMessage = `Brukerne ${adjective} appen`;
 
     this.setState(() => ({
       message: newMessage
@@ -77,14 +85,16 @@ class RateApp extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>{this.props.title}</h1>
+      <div className="rate-app">
+        <Heading1>{this.props.title}</Heading1>
         <RateButton clickAction={this.increment} type="like" />
         <RateButton clickAction={this.decrement} type="dislike" />
-        <div>{this.state.message}</div>
-        <button className="tjafs" onClick={this.reset}>
-          Tilbakestill
-        </button>
+        <ContextInfoMessage icon={<InfoIkon />}>
+          {this.state.message}
+        </ContextInfoMessage>
+        <ButtonGroup>
+          <SecondaryButton onClick={this.reset}>Tilbakestill</SecondaryButton>
+        </ButtonGroup>
       </div>
     );
   }

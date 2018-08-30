@@ -1,0 +1,58 @@
+@import "~@sb1/ffe-core/less/ffe";
+@import "../../index.less";
+
+.ffe-button-group {
+  @media @phone {
+    padding: 0;
+  }
+}
+
+.rate-button {
+  background-color: @ffe-white;
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  border: none;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  margin: 40px 20px;
+  padding: 0;
+
+  @media @phone {
+    height: 140px;
+    width: 140px;
+    border-radius: 70px;
+    margin: 0;
+  }
+
+  &.thumbsdown {
+    transform: rotate(180deg);
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: @ffe-green-shamrock;
+
+    svg {
+      fill: @ffe-white;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(68, 192, 255, 0.5);
+  }
+
+  svg {
+    height: 50%;
+    width: 50%;
+    fill: @ffe-blue-royal;
+
+    &.thumbsdown {
+      transform: rotate(180deg);
+    }
+
+    path {
+      fill: inherit;
+    }
+  }
+}

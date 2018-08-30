@@ -1,5 +1,29 @@
 @import "~@sb1/ffe-core/less/ffe";
+@import "~@sb1/ffe-context-message/less/ffe-context-message";
+@import "~@sb1/ffe-webfonts/fonts.less";
+@import "../../index.less";
 
-.tjafs {
-  background-color: orange;
+.rate-app {
+  box-sizing: border-box;
+  padding: 20px 40px;
+  text-align: center;
+  max-width: 560px;
+  font-family: MuseoSans-500, arial, sans-serif;
+
+  @media @phone {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ffe-h1 {
+    color: @ffe-white;
+
+    @media @phone {
+      margin: 0;
+    }
+  }
 }
