@@ -9,51 +9,35 @@ import { InfoIkon } from "@sb1/ffe-icons-react";
 class RateApp extends React.Component {
   constructor(props) {
     super(props);
-    this.increment = this.increment.bind(this);
-    this.decrement = this.decrement.bind(this);
+    this.likeHandler = this.likeHandler.bind(this);
+    this.dislikeHandler = this.dislikeHandler.bind(this);
     this.reset = this.reset.bind(this);
     this.state = {
       count: 0,
-      message: "Brukerne er nøytrale til appen",
       animateButton: "no-animation"
     };
   }
 
-  /* componentDidMount() {
-    console.log("this app is up and running");
-    this.setState(() => ({
-      message: "Du er nøytral til appen"
-    }));
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.count !== prevState.count) {
-      this.updateMessage();
-    }
-  } */
-
-  increment(e) {
+  likeHandler(e) {
     const buttonPressed = e.target;
-    buttonPressed.classList.add("animate");
+    buttonPressed.classList.toggle("animate");
     this.setState(
       prevState => ({
         count: prevState.count + 1
       }),
-      this.updateMessage
+      () => setTimeout(() => buttonPressed.classList.toggle("animate"), 200)
     );
-    setTimeout(() => buttonPressed.classList.remove("animate"), 200);
   }
 
-  decrement(e) {
+  dislikeHandler(e) {
     const buttonPressed = e.target;
-    buttonPressed.classList.add("animate");
+    buttonPressed.classList.toggle("animate");
     this.setState(
       prevState => ({
         count: prevState.count - 1
       }),
-      this.updateMessage
+      () => setTimeout(() => buttonPressed.classList.toggle("animate"), 200)
     );
-    setTimeout(() => buttonPressed.classList.remove("animate"), 200);
   }
 
   reset() {
@@ -63,10 +47,8 @@ class RateApp extends React.Component {
       () => ({
         count: 0
       }),
-      this.updateMessage
+      () => setTimeout(() => app.classList.toggle("flash"), 2000)
     );
-
-    setTimeout(() => app.classList.toggle("flash"), 2000);
   }
 
   updateMessage() {
@@ -89,10 +71,7 @@ class RateApp extends React.Component {
       adjective = "liker";
     }
     const newMessage = `Brukerne ${adjective} appen`;
-
-    this.setState(() => ({
-      message: newMessage
-    }));
+    return newMessage;
   }
 
   render() {
@@ -104,10 +83,10 @@ class RateApp extends React.Component {
         }}
       >
         <Heading1>{this.props.title}</Heading1>
-        <RateButton clickAction={this.increment} type="like" />
-        <RateButton clickAction={this.decrement} type="dislike" />
+        <RateButton clickAction={this.likeHandler} type="like" />
+        <RateButton clickAction={this.dislikeHandler} type="dislike" />
         <ContextInfoMessage icon={<InfoIkon />}>
-          {this.state.message}
+          {this.updateMessage()}
         </ContextInfoMessage>
         <ButtonGroup>
           <SecondaryButton onClick={this.reset}>Tilbakestill</SecondaryButton>
