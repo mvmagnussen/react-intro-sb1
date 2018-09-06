@@ -4,53 +4,30 @@ import RateButton from "../../components/RateButton/RateButton";
 class RateApp extends React.Component {
   constructor(props) {
     super(props);
-    this.increment = this.increment.bind(this);
-    this.decrement = this.decrement.bind(this);
+    this.likeHandler = this.likeHandler.bind(this);
+    this.dislikeHandler = this.dislikeHandler.bind(this);
     this.reset = this.reset.bind(this);
     this.state = {
-      count: 0,
-      message: "Du er nøytral til appen"
+      count: 0
     };
   }
 
-  /* componentDidMount() {
-    console.log("this app is up and running");
-    this.setState(() => ({
-      message: "Du er nøytral til appen"
+  likeHandler() {
+    this.setState(prevState => ({
+      count: prevState.count + 1
     }));
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.count !== prevState.count) {
-      this.updateMessage();
-    }
-  } */
-
-  increment() {
-    this.setState(
-      prevState => ({
-        count: prevState.count + 1
-      }),
-      this.updateMessage
-    );
-  }
-
-  decrement() {
-    this.setState(
-      prevState => ({
-        count: prevState.count - 1
-      }),
-      this.updateMessage
-    );
+  dislikeHandler() {
+    this.setState(prevState => ({
+      count: prevState.count - 1
+    }));
   }
 
   reset() {
-    this.setState(
-      () => ({
-        count: 0
-      }),
-      this.updateMessage
-    );
+    this.setState(() => ({
+      count: 0
+    }));
   }
 
   updateMessage() {
@@ -61,26 +38,23 @@ class RateApp extends React.Component {
     } else if (count < 0) {
       adjective = "misliker";
     } else if (count === 0) {
-      adjective = "er nøytral til";
+      adjective = "er nøytrale til";
     } else if (count > 5) {
       adjective = "virkelig digger";
     } else if (count > 0) {
       adjective = "liker";
     }
-    const newMessage = `Du ${adjective} appen`;
-
-    this.setState(() => ({
-      message: newMessage
-    }));
+    const newMessage = `Brukerne ${adjective} appen`;
+    return newMessage;
   }
 
   render() {
     return (
       <div>
         <h1>{this.props.title}</h1>
-        <RateButton clickAction={this.increment} type="like" />
-        <RateButton clickAction={this.decrement} type="dislike" />
-        <div>{this.state.message}</div>
+        <RateButton clickAction={this.likeHandler} type="like" />
+        <RateButton clickAction={this.dislikeHandler} type="dislike" />
+        <div>{this.updateMessage()}</div>
         <button onClick={this.reset}>Tilbakestill</button>
       </div>
     );
